@@ -6,4 +6,3 @@ export const ACTIVITY_TYPES: { name: string; minGoal: number }[] = [
   { name: 'Cycling', minGoal: 5 },
   { name: 'Other', minGoal: 0 },
 ];
-

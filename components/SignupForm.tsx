@@ -19,7 +19,7 @@ export default function SignupForm({ onSignup, onSuccess }: SignupFormProps) {
 
     try {
       const storedUsers = await AsyncStorage.getItem('users');
-      const users = storedUsers ? JSON.parse(storedUsers) : [];
+      let users = storedUsers ? JSON.parse(storedUsers) : [];
       if (users.find((u: { email: string }) => u.email === email)) {
         onSignup('Email already registered');
         return;
@@ -27,6 +27,7 @@ export default function SignupForm({ onSignup, onSuccess }: SignupFormProps) {
 
       users.push({ email, password });
       await AsyncStorage.setItem('users', JSON.stringify(users));
+      await AsyncStorage.setItem('currentUser', email);
       onSignup(`Account created for ${email}`);
       onSuccess();
     } catch (error) {

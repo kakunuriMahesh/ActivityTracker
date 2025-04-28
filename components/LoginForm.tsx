@@ -25,6 +25,7 @@ export default function LoginForm({ onLogin, onSuccess }: LoginFormProps) {
       );
 
       if (user) {
+        await AsyncStorage.setItem('currentUser', email);
         onLogin(`Welcome back, ${email}`);
         onSuccess();
       } else {
