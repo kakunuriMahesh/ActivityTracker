@@ -1,19 +1,9 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-
-interface Task {
-  id: string;
-  activity: string;
-  distance: number;
-  createdAt: string;
-  user: string;
-  duration: 'Day' | 'Week' | 'Month' | 'Year';
-  completed: boolean;
-  stop?: boolean;
-}
+import { SelfTask } from '../constants/schema';
 
 interface TaskListProps {
-  tasks: Task[];
+  tasks: SelfTask[];
   onToggleComplete: (taskId: string) => void;
   onStopTask: (taskId: string) => void;
 }
@@ -22,13 +12,13 @@ export default function TaskList({ tasks = [], onToggleComplete, onStopTask }: T
   return (
     <FlatList
       data={tasks}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item.taskId}
       renderItem={({ item }) => (
         <View style={styles.taskItem}>
           <TouchableOpacity
-            onPress={() => onToggleComplete(item.id)}
+            onPress={() => onToggleComplete(item.taskId)}
             style={styles.toggleButton}
-            disabled={item.completed} // Prevent toggling completed tasks
+            disabled={item.completed}
           >
             <Text style={styles.toggleIcon}>{item.completed ? '✅' : '⬜'}</Text>
           </TouchableOpacity>
@@ -37,11 +27,12 @@ export default function TaskList({ tasks = [], onToggleComplete, onStopTask }: T
               {item.activity} - {item.distance} km ({item.duration})
             </Text>
             <Text style={styles.taskDate}>
-              Created: {new Date(item.createdAt).toLocaleDateString()}
+              Period: {new Date(item.startDate).toLocaleDateString()} -{' '}
+              {new Date(item.endDate).toLocaleDateString()}
             </Text>
           </View>
           {!item.completed && (
-            <TouchableOpacity onPress={() => onStopTask(item.id)} style={styles.stopButton}>
+            <TouchableOpacity onPress={() => onStopTask(item.taskId)} style={styles.stopButton}>
               <Text style={styles.stopButtonText}>Stop</Text>
             </TouchableOpacity>
           )}
@@ -101,6 +92,113 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
+
+
+// TODO: adding mockData
+
+// import React from 'react';
+// import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+
+// interface Task {
+//   id: string;
+//   activity: string;
+//   distance: number;
+//   createdAt: string;
+//   user: string;
+//   duration: 'Day' | 'Week' | 'Month' | 'Year';
+//   completed: boolean;
+//   stop?: boolean;
+// }
+
+// interface TaskListProps {
+//   tasks: Task[];
+//   onToggleComplete: (taskId: string) => void;
+//   onStopTask: (taskId: string) => void;
+// }
+
+// export default function TaskList({ tasks = [], onToggleComplete, onStopTask }: TaskListProps) {
+//   return (
+//     <FlatList
+//       data={tasks}
+//       keyExtractor={(item) => item.id}
+//       renderItem={({ item }) => (
+//         <View style={styles.taskItem}>
+//           <TouchableOpacity
+//             onPress={() => onToggleComplete(item.id)}
+//             style={styles.toggleButton}
+//             disabled={item.completed} // Prevent toggling completed tasks
+//           >
+//             <Text style={styles.toggleIcon}>{item.completed ? '✅' : '⬜'}</Text>
+//           </TouchableOpacity>
+//           <View style={styles.taskDetails}>
+//             <Text style={[styles.taskText, item.completed && styles.completedText]}>
+//               {item.activity} - {item.distance} km ({item.duration})
+//             </Text>
+//             <Text style={styles.taskDate}>
+//               Created: {new Date(item.createdAt).toLocaleDateString()}
+//             </Text>
+//           </View>
+//           {!item.completed && (
+//             <TouchableOpacity onPress={() => onStopTask(item.id)} style={styles.stopButton}>
+//               <Text style={styles.stopButtonText}>Stop</Text>
+//             </TouchableOpacity>
+//           )}
+//         </View>
+//       )}
+//       ListEmptyComponent={
+//         <Text style={styles.emptyText}>No tasks created yet.</Text>
+//       }
+//     />
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   taskItem: {
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//     padding: 10,
+//     borderBottomWidth: 1,
+//     borderBottomColor: '#ccc',
+//   },
+//   toggleButton: {
+//     marginRight: 10,
+//     width: 24,
+//     height: 24,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   toggleIcon: {
+//     fontSize: 20,
+//   },
+//   taskDetails: {
+//     flex: 1,
+//   },
+//   taskText: {
+//     fontSize: 16,
+//   },
+//   completedText: {
+//     textDecorationLine: 'line-through',
+//     color: '#666',
+//   },
+//   taskDate: {
+//     fontSize: 12,
+//     color: '#666',
+//   },
+//   stopButton: {
+//     backgroundColor: '#ff4444',
+//     padding: 5,
+//     borderRadius: 5,
+//   },
+//   stopButtonText: {
+//     color: '#fff',
+//     fontSize: 12,
+//   },
+//   emptyText: {
+//     textAlign: 'center',
+//     fontSize: 16,
+//     marginTop: 20,
+//   },
+// });
 
 // FIXME: working witout checkbox
 // import React from 'react';
