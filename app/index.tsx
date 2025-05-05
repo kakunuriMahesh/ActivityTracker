@@ -22,7 +22,7 @@ export default function HomeScreen() {
         }
         const userData = JSON.parse(currentUser);
         setUser(userData);
-        const response = await axios.get(`http://localhost:5000/api/users/${userData.userId}/notifications`);
+        const response = await axios.get(`http://localhost:5000/api/notifications/${userData.userId}`);
         const unread = response.data.filter((n: any) => !n.read).length;
         setUnreadCount(unread);
       } catch (err) {
@@ -45,6 +45,12 @@ export default function HomeScreen() {
             <Text style={styles.badgeText}>{unreadCount}</Text>
           </View>
         )}
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => router.push('/profile')}
+      >
+        <Text style={styles.buttonText}>View Profile</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
@@ -84,7 +90,94 @@ const styles = StyleSheet.create({
   error: { color: 'red', marginTop: 20, textAlign: 'center' },
 });
 
-// FIXME: TODO: adding home screen
+// FIXME: below is woring but fixing profile
+
+// import React, { useState, useEffect } from 'react';
+// import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+// import { router } from 'expo-router';
+// import axios from 'axios';
+// import { MaterialIcons } from '@expo/vector-icons';
+
+// export default function HomeScreen() {
+//   const [user, setUser] = useState<any>(null);
+//   const [unreadCount, setUnreadCount] = useState(0);
+//   const [error, setError] = useState('');
+
+//   useEffect(() => {
+//     const loadUser = async () => {
+//       try {
+//         const currentUser = await AsyncStorage.getItem('currentUser');
+//         if (!currentUser) {
+//           setError('No user logged in');
+//           router.push('/login');
+//           return;
+//         }
+//         const userData = JSON.parse(currentUser);
+//         setUser(userData);
+//         const response = await axios.get(`http://localhost:5000/api/users/${userData.userId}/notifications`);
+//         const unread = response.data.filter((n: any) => !n.read).length;
+//         setUnreadCount(unread);
+//       } catch (err) {
+//         setError('Failed to load user data');
+//       }
+//     };
+//     loadUser();
+//   }, []);
+
+//   return (
+//     <View style={styles.container}>
+//       <Text style={styles.title}>Welcome, {user?.name || 'User'}!</Text>
+//       <TouchableOpacity
+//         style={styles.notificationButton}
+//         onPress={() => router.push('/notifications')}
+//       >
+//         <MaterialIcons name="notifications" size={30} color="#007AFF" />
+//         {unreadCount > 0 && (
+//           <View style={styles.badge}>
+//             <Text style={styles.badgeText}>{unreadCount}</Text>
+//           </View>
+//         )}
+//       </TouchableOpacity>
+//       <TouchableOpacity
+//         style={styles.button}
+//         onPress={() => router.push('/tasks')}
+//       >
+//         <Text style={styles.buttonText}>View Tasks & Challenges</Text>
+//       </TouchableOpacity>
+//       <TouchableOpacity
+//         style={styles.button}
+//         onPress={() => router.push('/challenge')}
+//       >
+//         <Text style={styles.buttonText}>Create Challenge</Text>
+//       </TouchableOpacity>
+//       {error && <Text style={styles.error}>{error}</Text>}
+//     </View>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: { flex: 1, padding: 20, justifyContent: 'center' },
+//   title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
+//   notificationButton: { position: 'absolute', top: 20, right: 20 },
+//   badge: {
+//     position: 'absolute',
+//     top: -5,
+//     right: -5,
+//     backgroundColor: 'red',
+//     borderRadius: 10,
+//     width: 20,
+//     height: 20,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   badgeText: { color: 'white', fontSize: 12 },
+//   button: { backgroundColor: '#007AFF', padding: 15, borderRadius: 5, marginTop: 10 },
+//   buttonText: { color: '#fff', fontSize: 16, textAlign: 'center' },
+//   error: { color: 'red', marginTop: 20, textAlign: 'center' },
+// });
+
+// TODO: adding home screen
 
 // import React, { useEffect, useState } from 'react';
 // import { View, Text, Button, StyleSheet, Image } from 'react-native';

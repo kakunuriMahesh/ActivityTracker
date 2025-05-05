@@ -202,8 +202,214 @@ const styles = StyleSheet.create({
   input: { borderWidth: 1, padding: 10, marginBottom: 10, borderRadius: 5 },
 });
 
+// FIXME: below is working but fixing challange
 
-// FIXME: TODO: fix challange refresh ans response handling
+// import React, { useState, useEffect } from 'react';
+// import {
+//   View,
+//   Text,
+//   Button,
+//   StyleSheet,
+//   FlatList,
+//   TouchableOpacity,
+//   TextInput,
+// } from 'react-native';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+// import { router } from 'expo-router';
+// import axios from 'axios';
+
+// export default function TasksScreen() {
+//   const [tasks, setTasks] = useState([]);
+//   const [challenges, setChallenges] = useState([]);
+//   const [error, setError] = useState<string | null>(null);
+//   const [activeTab, setActiveTab] = useState<'Tasks' | 'Challenges'>('Tasks');
+//   const [userId, setUserId] = useState('');
+//   const [responseReason, setResponseReason] = useState('');
+//   const [respondingChallengeId, setRespondingChallengeId] = useState<string | null>(null);
+
+//   useEffect(() => {
+//     const loadData = async () => {
+//       try {
+//         const currentUser = await AsyncStorage.getItem('currentUser');
+//         if (!currentUser) {
+//           setError('No user logged in');
+//           return;
+//         }
+//         const user = JSON.parse(currentUser);
+//         setUserId(user.userId);
+//         const tasksResponse = await axios.get(`http://localhost:5000/api/users/${user.userId}/tasks`);
+//         setTasks(tasksResponse.data.filter((task: any) => !task.completed && new Date(task.endDate) >= new Date()));
+//         const challengesResponse = await axios.get(`http://localhost:5000/api/users/${user.userId}/challenges`);
+//         setChallenges(challengesResponse.data);
+//       } catch (error) {
+//         console.error('Error loading data:', error);
+//         setError('Failed to load data');
+//       }
+//     };
+//     loadData();
+//   }, []);
+
+//   const handleToggleComplete = async (taskId: string) => {
+//     try {
+//       await axios.patch(`http://localhost:5000/api/tasks/${taskId}`, { completed: true });
+//       const tasksResponse = await axios.get(`http://localhost:5000/api/users/${userId}/tasks`);
+//       setTasks(tasksResponse.data.filter((task: any) => !task.completed && new Date(task.endDate) >= new Date()));
+//     } catch (error) {
+//       console.error('Error updating task:', error);
+//       alert('Error updating task');
+//     }
+//   };
+
+//   const handleStopTask = async (taskId: string) => {
+//     try {
+//       await axios.patch(`http://localhost:5000/api/tasks/${taskId}`, { completed: true });
+//       const tasksResponse = await axios.get(`http://localhost:5000/api/users/${userId}/tasks`);
+//       setTasks(tasksResponse.data.filter((task: any) => !task.completed && new Date(task.endDate) >= new Date()));
+//     } catch (error) {
+//       console.error('Error stopping task:', error);
+//       alert('Error stopping task');
+//     }
+//   };
+
+//   const handleChallengeResponse = async (challengeId: string, response: 'agree' | 'reject' | 'skip') => {
+//     try {
+//       const payload = {
+//         userId,
+//         response,
+//         responseReason: response === 'reject' || response === 'skip' ? responseReason : undefined,
+//       };
+//       await axios.post(`http://localhost:5000/api/challenges/${challengeId}/respond`, payload);
+//       alert(`Challenge ${response}ed successfully`);
+//       const challengesResponse = await axios.get(`http://localhost:5000/api/users/${userId}/challenges`);
+//       setChallenges(challengesResponse.data);
+//       setResponseReason('');
+//       setRespondingChallengeId(null);
+//     } catch (error) {
+//       console.error('Error responding to challenge:', error);
+//       alert('Error responding to challenge: ' + (error.response?.data?.error || error.message));
+//     }
+//   };
+
+//   const renderChallenge = ({ item }: { item: any }) => {
+//     const isAssignee = item.assigneeIds.includes(userId);
+//     const isCreator = item.creatorId === userId;
+//     const participantStatus = item.progress.find((p: any) => p.userId === userId)?.status || 'pending';
+
+//     return (
+//       <TouchableOpacity
+//         style={styles.challengeItem}
+//         onPress={() => router.push({ pathname: '/challenge-details', params: { challengeId: item._id } })}
+//       >
+//         <Text style={styles.challengeTitle}>{item.title}</Text>
+//         <Text>Status: {participantStatus}</Text>
+//         <Text>Distance: {item.taskId.distance} km</Text>
+//         <Text>Duration: {item.duration}</Text>
+//         <Text>Reward: ${item.reward}</Text>
+//         {isAssignee && !isCreator && participantStatus === 'pending' && (
+//           <View style={styles.responseContainer}>
+//             <Button title="Agree" onPress={() => handleChallengeResponse(item._id, 'agree')} />
+//             <Button title="Reject" onPress={() => setRespondingChallengeId(item._id)} />
+//             <Button title="Skip" onPress={() => setRespondingChallengeId(item._id)} />
+//             {respondingChallengeId === item._id && (
+//               <View>
+//                 <TextInput
+//                   style={styles.input}
+//                   placeholder="Reason for rejection/skip"
+//                   value={responseReason}
+//                   onChangeText={setResponseReason}
+//                 />
+//                 <Button
+//                   title="Confirm Reject"
+//                   onPress={() => handleChallengeResponse(item._id, 'reject')}
+//                 />
+//                 <Button
+//                   title="Confirm Skip"
+//                   onPress={() => handleChallengeResponse(item._id, 'skip')}
+//                 />
+//               </View>
+//             )}
+//           </View>
+//         )}
+//       </TouchableOpacity>
+//     );
+//   };
+
+//   const renderTask = ({ item }: { item: any }) => (
+//     <View style={styles.taskItem}>
+//       <Text>{item.activity} - {item.distance} km ({item.duration})</Text>
+//       <Button title="Complete" onPress={() => handleToggleComplete(item._id)} />
+//       <Button title="Stop" onPress={() => handleStopTask(item._id)} />
+//     </View>
+//   );
+
+//   if (error) {
+//     return (
+//       <View style={styles.container}>
+//         <Text style={styles.title}>Error</Text>
+//         <Text style={styles.errorText}>{error}</Text>
+//         <Button title="Back to Dashboard" onPress={() => router.push('/')} />
+//       </View>
+//     );
+//   }
+
+//   return (
+//     <View style={styles.container}>
+//       <Text style={styles.title}>Your Tasks</Text>
+//       <View style={styles.tabContainer}>
+//         <TouchableOpacity
+//           style={[styles.tab, activeTab === 'Tasks' && styles.activeTab]}
+//           onPress={() => setActiveTab('Tasks')}
+//         >
+//           <Text style={styles.tabText}>Personal Tasks</Text>
+//         </TouchableOpacity>
+//         <TouchableOpacity
+//           style={[styles.tab, activeTab === 'Challenges' && styles.activeTab]}
+//           onPress={() => setActiveTab('Challenges')}
+//         >
+//           <Text style={styles.tabText}>Challenges</Text>
+//         </TouchableOpacity>
+//       </View>
+//       {activeTab === 'Tasks' && (
+//         <>
+//           <FlatList
+//             data={tasks}
+//             renderItem={renderTask}
+//             keyExtractor={(item) => item._id}
+//             ListEmptyComponent={<Text>No active tasks</Text>}
+//           />
+//           <Button title="Create New Task" onPress={() => router.push('/task')} />
+//         </>
+//       )}
+//       {activeTab === 'Challenges' && (
+//         <FlatList
+//           data={challenges}
+//           renderItem={renderChallenge}
+//           keyExtractor={(item) => item._id}
+//           ListEmptyComponent={<Text>No challenges</Text>}
+//         />
+//       )}
+//       <Button title="Back to Dashboard" onPress={() => router.push('/')} />
+//     </View>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: { flex: 1, padding: 20 },
+//   title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
+//   errorText: { fontSize: 16, color: 'red', textAlign: 'center', marginBottom: 20 },
+//   tabContainer: { flexDirection: 'row', marginBottom: 20 },
+//   tab: { flex: 1, padding: 10, alignItems: 'center', backgroundColor: '#f0f0f0', borderBottomWidth: 2, borderBottomColor: '#ccc' },
+//   activeTab: { backgroundColor: '#e0f7fa', borderBottomColor: '#00C851' },
+//   tabText: { fontSize: 16, fontWeight: 'bold' },
+//   challengeItem: { padding: 10, borderBottomWidth: 1, borderBottomColor: '#ccc', marginBottom: 10 },
+//   challengeTitle: { fontSize: 18, fontWeight: 'bold' },
+//   taskItem: { padding: 10, borderBottomWidth: 1, borderBottomColor: '#ccc', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+//   responseContainer: { marginTop: 10 },
+//   input: { borderWidth: 1, padding: 10, marginBottom: 10, borderRadius: 5 },
+// });
+
+
+// TODO: fix challange refresh ans response handling
 
 // import React, { useState, useEffect } from 'react';
 // import {
