@@ -13,10 +13,11 @@ import axios from 'axios';
 
 export default function ProfileScreen() {
   const [profile, setProfile] = useState<any>(null);
+  const [leaderboard, setLeaderboard] = useState<any[]>([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const loadProfile = async () => {
+    const loadProfileAndLeaderboard = async () => {
       try {
         const currentUser = await AsyncStorage.getItem('currentUser');
         if (!currentUser) {
@@ -25,13 +26,16 @@ export default function ProfileScreen() {
           return;
         }
         const user = JSON.parse(currentUser);
-        const response = await axios.get(`http://localhost:5000/api/users/${user.userId}/profile`);
-        setProfile(response.data);
+        setProfile(user);
+
+        // Fetch leaderboard
+        const leaderboardResponse = await axios.get('http://localhost:5000/api/users/leaderboard');
+        setLeaderboard(leaderboardResponse.data);
       } catch (err) {
-        setError('Failed to load profile');
+        setError('Failed to load profile or leaderboard');
       }
     };
-    loadProfile();
+    loadProfileAndLeaderboard();
   }, []);
 
   if (!profile) {
@@ -51,6 +55,17 @@ export default function ProfileScreen() {
     </TouchableOpacity>
   );
 
+  const renderLeaderboardItem = ({ item, index }: { item: any; index: number }) => (
+    <View style={styles.leaderboardItem}>
+      <Text style={styles.rank}>#{index + 1}</Text>
+      <View style={styles.leaderboardDetails}>
+        <Text style={styles.leaderboardName}>{item.name}</Text>
+        <Text style={styles.leaderboardUserId}>ID: {item.userId}</Text>
+        <Text style={styles.leaderboardPoints}>{item.totalPoints} points</Text>
+      </View>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile</Text>
@@ -61,6 +76,14 @@ export default function ProfileScreen() {
         <Text style={styles.label}>User ID: {profile.userId}</Text>
         <Text style={styles.label}>Streak: {profile.streak} days</Text>
       </View>
+      <Text style={styles.sectionTitle}>Leaderboard</Text>
+      <FlatList
+        data={leaderboard}
+        renderItem={renderLeaderboardItem}
+        keyExtractor={(item) => item.userId}
+        ListEmptyComponent={<Text>No leaderboard data</Text>}
+        style={styles.leaderboardList}
+      />
       <Text style={styles.sectionTitle}>Challenges</Text>
       <FlatList
         data={profile.challenges}
@@ -83,10 +106,126 @@ const styles = StyleSheet.create({
   profileInfo: { marginBottom: 20 },
   label: { fontSize: 16, marginBottom: 10 },
   sectionTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 10 },
-  challengeItem: { padding: 10, borderBottomWidth: 1, borderBottomColor: '#ccc', marginBottom: 10 },
+  challengeItem: { padding: 15, borderBottomWidth: 1, borderBottomColor: '#ccc', marginBottom: 10, backgroundColor: '#f9f9f9', borderRadius: 5 },
   challengeTitle: { fontSize: 18, fontWeight: 'bold' },
-  error: { color: 'red', marginBottom: 10 },
+  leaderboardList: { marginBottom: 20 },
+  leaderboardItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  rank: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#007AFF',
+    width: 40,
+    textAlign: 'center',
+  },
+  leaderboardDetails: { flex: 1 },
+  leaderboardName: { fontSize: 16, fontWeight: 'bold' },
+  leaderboardUserId: { fontSize: 14, color: '#555' },
+  leaderboardPoints: { fontSize: 14, color: '#007AFF' },
+  error: { color: 'red', marginBottom: 10, textAlign: 'center' },
 });
+
+// FIXME: TODO: leaderboard TODO:
+
+// import React, { useState, useEffect } from 'react';
+// import {
+//   View,
+//   Text,
+//   Button,
+//   FlatList,
+//   StyleSheet,
+//   TouchableOpacity,
+// } from 'react-native';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+// import { router } from 'expo-router';
+// import axios from 'axios';
+
+// export default function ProfileScreen() {
+//   const [profile, setProfile] = useState<any>(null);
+//   const [error, setError] = useState('');
+
+//   useEffect(() => {
+//     const loadProfile = async () => {
+//       try {
+//         const currentUser = await AsyncStorage.getItem('currentUser');
+//         if (!currentUser) {
+//           setError('No user logged in');
+//           router.push('/login');
+//           return;
+//         }
+//         const user = JSON.parse(currentUser);
+//         console.log(user,"response/data");
+//         // const response = await axios.get(`http://localhost:5000/api/users/${user.userId}/profile`);
+//         // console.log(response,"response/data");
+//         setProfile(user);
+//       } catch (err) {
+//         setError('Failed to load profile');
+//       }
+//     };
+//     loadProfile();
+//   }, []);
+
+//   if (!profile) {
+//     return <Text>Loading...</Text>;
+//   }
+
+//   const renderChallenge = ({ item }: { item: any }) => (
+//     <TouchableOpacity
+//       style={styles.challengeItem}
+//       onPress={() => router.push({ pathname: '/challenge-details', params: { challengeId: item._id } })}
+//     >
+//       <Text style={styles.challengeTitle}>{item.title}</Text>
+//       <Text>Role: {item.creatorId === profile.userId ? 'Creator' : 'Participant'}</Text>
+//       <Text>Status: {item.status}</Text>
+//       <Text>Distance: {item.taskId.distance} km</Text>
+//       <Text>Reward: ${item.reward}</Text>
+//     </TouchableOpacity>
+//   );
+
+//   return (
+//     <View style={styles.container}>
+//       <Text style={styles.title}>Profile</Text>
+//       {error && <Text style={styles.error}>{error}</Text>}
+//       <View style={styles.profileInfo}>
+//         <Text style={styles.label}>Name: {profile.name}</Text>
+//         <Text style={styles.label}>Email: {profile.email}</Text>
+//         <Text style={styles.label}>User ID: {profile.userId}</Text>
+//         <Text style={styles.label}>Streak: {profile.streak} days</Text>
+//       </View>
+//       <Text style={styles.sectionTitle}>Challenges</Text>
+//       <FlatList
+//         data={profile.challenges}
+//         renderItem={renderChallenge}
+//         keyExtractor={(item) => item._id}
+//         ListEmptyComponent={<Text>No challenges</Text>}
+//       />
+//       <Button
+//         title="View All Challenges"
+//         onPress={() => alert('Challenges page coming soon!')}
+//       />
+//       <Button title="Back to Dashboard" onPress={() => router.push('/')} />
+//     </View>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: { flex: 1, padding: 20 },
+//   title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
+//   profileInfo: { marginBottom: 20 },
+//   label: { fontSize: 16, marginBottom: 10 },
+//   sectionTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 10 },
+//   challengeItem: { padding: 10, borderBottomWidth: 1, borderBottomColor: '#ccc', marginBottom: 10 },
+//   challengeTitle: { fontSize: 18, fontWeight: 'bold' },
+//   error: { color: 'red', marginBottom: 10 },
+// });
 
 // FIXME: below is working fix the profile with changes
 

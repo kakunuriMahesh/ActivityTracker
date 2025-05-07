@@ -120,7 +120,7 @@ export default function NotificationsScreen() {
               <View style={styles.responseContainer}>
                 <Button title="Agree" onPress={() => handleResponse(selectedChallenge._id, 'agree')} />
                 <Button title="Reject" onPress={() => setResponse('reject')} />
-                <Button title="Skip" onPress={() => setResponse('skip')} />
+                {/* <Button title="Skip" onPress={() => setResponse('skip')} /> */}
               </View>
               {response && (
                 <View>

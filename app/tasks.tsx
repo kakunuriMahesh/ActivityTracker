@@ -103,7 +103,7 @@ export default function TasksScreen() {
           <View style={styles.responseContainer}>
             <Button title="Agree" onPress={() => handleChallengeResponse(item._id, 'agree')} />
             <Button title="Reject" onPress={() => setRespondingChallengeId(item._id)} />
-            <Button title="Skip" onPress={() => setRespondingChallengeId(item._id)} />
+            {/* <Button title="Skip" onPress={() => setRespondingChallengeId(item._id)} /> */}
             {respondingChallengeId === item._id && (
               <View>
                 <TextInput
@@ -116,10 +116,10 @@ export default function TasksScreen() {
                   title="Confirm Reject"
                   onPress={() => handleChallengeResponse(item._id, 'reject')}
                 />
-                <Button
+                {/* <Button
                   title="Confirm Skip"
                   onPress={() => handleChallengeResponse(item._id, 'skip')}
-                />
+                /> */}
               </View>
             )}
           </View>
