@@ -13,7 +13,7 @@ export default function LoginScreen() {
 
   const handleManualLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/api/users/login', { email });
+      const response = await axios.post('https://activity-tracker-backend-paum.onrender.com/api/users/login', { email });
       await AsyncStorage.setItem('currentUser', JSON.stringify(response.data));
       router.push('/');
     } catch (err) {
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
 
 //   const handleManualLogin = async () => {
 //     try {
-//       const response = await axios.post('http://localhost:5000/api/users/login', { email });
+//       const response = await axios.post('https://activity-tracker-backend-paum.onrender.com/api/users/login', { email });
 //       await AsyncStorage.setItem('currentUser', JSON.stringify(response.data));
 //       router.push('/');
 //     } catch (err) {

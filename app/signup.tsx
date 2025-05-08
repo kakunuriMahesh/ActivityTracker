@@ -14,7 +14,7 @@ export default function SignupScreen() {
 
   const handleManualSignup = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/api/users/signup', {
+      const response = await axios.post('https://activity-tracker-backend-paum.onrender.com/api/users/signup', {
         email,
         name,
         authProvider: 'manual',
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
 
 //   const handleManualSignup = async () => {
 //     try {
-//       const response = await axios.post('http://localhost:5000/api/users/signup', {
+//       const response = await axios.post('https://activity-tracker-backend-paum.onrender.com/api/users/signup', {
 //         email,
 //         name,
 //         authProvider: 'manual',
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
 
 //   const handleManualSignup = async () => {
 //     try {
-//       const response = await axios.post('http://localhost:5000/api/users', {
+//       const response = await axios.post('https://activity-tracker-backend-paum.onrender.com/api/users', {
 //         email,
 //         name,
 //         authProvider: 'manual',

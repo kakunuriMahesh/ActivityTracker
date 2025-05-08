@@ -1,4 +1,4 @@
-export const API_BASE_URL: string = 'http://localhost:5000';
+export const API_BASE_URL: string = 'https://activity-tracker-backend-paum.onrender.com';
 
 export const ACTIVITY_TYPES: { name: string; minGoal: number }[] = [
   { name: 'Running', minGoal: 3 },

@@ -51,7 +51,7 @@ export default function ChallengeDetailsScreen() {
         }
         const user = JSON.parse(currentUser);
         setUserId(user.userId);
-        const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+        const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
         const challengeData = response.data;
         setChallenge(challengeData);
         setEditTitle(challengeData.title);
@@ -126,13 +126,13 @@ export default function ChallengeDetailsScreen() {
 
   const handleResponse = async (resp: 'agree' | 'reject' | 'skip') => {
     try {
-      await axios.post(`http://localhost:5000/api/challenges/${challengeId}/respond`, {
+      await axios.post(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/respond`, {
         userId,
         response: resp,
         responseReason: resp !== 'agree' ? responseReason : undefined,
       });
       alert(`Challenge ${resp}ed successfully`);
-      const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+      const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
       setChallenge(response.data);
       setResponse('');
       setResponseReason('');
@@ -164,7 +164,7 @@ export default function ChallengeDetailsScreen() {
         setError('Invalid distance');
         return;
       }
-      await axios.post(`http://localhost:5000/api/challenges/${challengeId}/progress`, {
+      await axios.post(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/progress`, {
         userId,
         distance,
         url: progressUrl || undefined,
@@ -172,7 +172,7 @@ export default function ChallengeDetailsScreen() {
         date: new Date(),
       });
       alert('Progress updated');
-      const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+      const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
       setChallenge(response.data);
       setProgressInput('');
       setProgressUrl('');
@@ -193,7 +193,7 @@ export default function ChallengeDetailsScreen() {
     }
     const durationText = getDurationText(editStartDate, editEndDate);
     try {
-      const response = await axios.patch(`http://localhost:5000/api/challenges/${challengeId}/edit`, {
+      const response = await axios.patch(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/edit`, {
         userId,
         title: editTitle,
         rules: editRules.filter((r) => r.trim()),
@@ -219,7 +219,7 @@ export default function ChallengeDetailsScreen() {
 
   const handleDeleteChallenge = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/challenges/${challengeId}`, {
+      await axios.delete(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`, {
         data: { userId },
       });
       alert('Challenge deleted successfully');
@@ -247,7 +247,7 @@ export default function ChallengeDetailsScreen() {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/users/search?query=${searchQuery}`);
+      const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/search?query=${searchQuery}`);
       setUsers(response.data);
     } catch (err) {
       setError('Failed to search users');
@@ -599,7 +599,7 @@ const styles = StyleSheet.create({
 //         const user = JSON.parse(currentUser);
 //         setUserId(user.userId);
 //         const response = await axios.get(
-//           `http://localhost:5000/api/challenges/${challengeId}`
+//           `https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`
 //         );
 //         const challengeData = response.data;
 //         setChallenge(challengeData);
@@ -669,7 +669,7 @@ const styles = StyleSheet.create({
 //   const handleResponse = async (resp: "agree" | "reject" | "skip") => {
 //     try {
 //       await axios.post(
-//         `http://localhost:5000/api/challenges/${challengeId}/respond`,
+//         `https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/respond`,
 //         {
 //           userId,
 //           response: resp,
@@ -678,7 +678,7 @@ const styles = StyleSheet.create({
 //       );
 //       alert(`Challenge ${resp}ed successfully`);
 //       const response = await axios.get(
-//         `http://localhost:5000/api/challenges/${challengeId}`
+//         `https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`
 //       );
 //       setChallenge(response.data);
 //       setResponse("");
@@ -715,7 +715,7 @@ const styles = StyleSheet.create({
 //         return;
 //       }
 //       await axios.post(
-//         `http://localhost:5000/api/challenges/${challengeId}/progress`,
+//         `https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/progress`,
 //         {
 //           userId,
 //           distance,
@@ -726,7 +726,7 @@ const styles = StyleSheet.create({
 //       );
 //       alert("Progress updated");
 //       const response = await axios.get(
-//         `http://localhost:5000/api/challenges/${challengeId}`
+//         `https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`
 //       );
 //       setChallenge(response.data);
 //       setProgressInput("");
@@ -747,7 +747,7 @@ const styles = StyleSheet.create({
 //     }
 //     try {
 //       const response = await axios.patch(
-//         `http://localhost:5000/api/challenges/${challengeId}/edit`,
+//         `https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/edit`,
 //         {
 //           userId,
 //           title: editTitle,
@@ -778,7 +778,7 @@ const styles = StyleSheet.create({
 //   const handleDeleteChallenge = async () => {
 //     try {
 //       await axios.delete(
-//         `http://localhost:5000/api/challenges/${challengeId}`,
+//         `https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`,
 //         {
 //           data: { userId },
 //         }
@@ -814,7 +814,7 @@ const styles = StyleSheet.create({
 //   const handleSearch = async () => {
 //     try {
 //       const response = await axios.get(
-//         `http://localhost:5000/api/users/search?query=${searchQuery}`
+//         `https://activity-tracker-backend-paum.onrender.com/api/users/search?query=${searchQuery}`
 //       );
 //       setUsers(response.data);
 //     } catch (err) {
@@ -1240,7 +1240,7 @@ const styles = StyleSheet.create({
 //         }
 //         const user = JSON.parse(currentUser);
 //         setUserId(user.userId);
-//         const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+//         const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
 //         const challengeData = response.data;
 //         setChallenge(challengeData);
 //         setEditTitle(challengeData.title);
@@ -1266,13 +1266,13 @@ const styles = StyleSheet.create({
 
 //   const handleResponse = async (resp: 'agree' | 'reject' | 'skip') => {
 //     try {
-//       await axios.post(`http://localhost:5000/api/challenges/${challengeId}/respond`, {
+//       await axios.post(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/respond`, {
 //         userId,
 //         response: resp,
 //         responseReason: resp !== 'agree' ? responseReason : undefined,
 //       });
 //       alert(`Challenge ${resp}ed successfully`);
-//       const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+//       const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
 //       setChallenge(response.data);
 //       setResponse('');
 //       setResponseReason('');
@@ -1303,7 +1303,7 @@ const styles = StyleSheet.create({
 //         setError('Invalid distance');
 //         return;
 //       }
-//       await axios.post(`http://localhost:5000/api/challenges/${challengeId}/progress`, {
+//       await axios.post(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/progress`, {
 //         userId,
 //         distance,
 //         url: progressUrl || undefined,
@@ -1311,7 +1311,7 @@ const styles = StyleSheet.create({
 //         date: new Date(),
 //       });
 //       alert('Progress updated');
-//       const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+//       const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
 //       setChallenge(response.data);
 //       setProgressInput('');
 //       setProgressUrl('');
@@ -1323,7 +1323,7 @@ const styles = StyleSheet.create({
 
 //   const handleEditChallenge = async () => {
 //     try {
-//       const response = await axios.patch(`http://localhost:5000/api/challenges/${challengeId}/edit`, {
+//       const response = await axios.patch(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/edit`, {
 //         userId,
 //         title: editTitle,
 //         rules: editRules.filter((r) => r.trim()),
@@ -1346,7 +1346,7 @@ const styles = StyleSheet.create({
 
 //   const handleDeleteChallenge = async () => {
 //     try {
-//       await axios.delete(`http://localhost:5000/api/challenges/${challengeId}`, {
+//       await axios.delete(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`, {
 //         data: { userId },
 //       });
 //       alert('Challenge deleted successfully');
@@ -1651,7 +1651,7 @@ const styles = StyleSheet.create({
 //         }
 //         const user = JSON.parse(currentUser);
 //         setUserId(user.userId);
-//         const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+//         const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
 //         setChallenge(response.data);
 //         setEditTitle(response.data.title);
 //         setEditRules(response.data.rules);
@@ -1672,13 +1672,13 @@ const styles = StyleSheet.create({
 
 //   const handleResponse = async (resp: 'agree' | 'reject' | 'skip') => {
 //     try {
-//       await axios.post(`http://localhost:5000/api/challenges/${challengeId}/respond`, {
+//       await axios.post(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/respond`, {
 //         userId,
 //         response: resp,
 //         responseReason: resp !== 'agree' ? responseReason : undefined,
 //       });
 //       alert(`Challenge ${resp}ed successfully`);
-//       const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+//       const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
 //       setChallenge(response.data);
 //       setResponse('');
 //       setResponseReason('');
@@ -1705,7 +1705,7 @@ const styles = StyleSheet.create({
 //         setError('Invalid distance');
 //         return;
 //       }
-//       await axios.post(`http://localhost:5000/api/challenges/${challengeId}/progress`, {
+//       await axios.post(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/progress`, {
 //         userId,
 //         distance,
 //         url: progressUrl || undefined,
@@ -1713,7 +1713,7 @@ const styles = StyleSheet.create({
 //         date: new Date(),
 //       });
 //       alert('Progress updated');
-//       const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+//       const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
 //       setChallenge(response.data);
 //       setProgressInput('');
 //       setProgressUrl('');
@@ -1725,7 +1725,7 @@ const styles = StyleSheet.create({
 
 //   const handleEditChallenge = async () => {
 //     try {
-//       const response = await axios.patch(`http://localhost:5000/api/challenges/${challengeId}/edit`, {
+//       const response = await axios.patch(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/edit`, {
 //         userId,
 //         title: editTitle,
 //         rules: editRules.filter((r) => r.trim()),
@@ -1744,7 +1744,7 @@ const styles = StyleSheet.create({
 
 //   const handleDeleteChallenge = async () => {
 //     try {
-//       await axios.delete(`http://localhost:5000/api/challenges/${challengeId}`, {
+//       await axios.delete(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`, {
 //         data: { userId },
 //       });
 //       alert('Challenge deleted successfully');
@@ -2029,7 +2029,7 @@ const styles = StyleSheet.create({
 //         }
 //         const user = JSON.parse(currentUser);
 //         setUserId(user.userId);
-//         const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+//         const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
 //         setChallenge(response.data);
 //       } catch (err) {
 //         setError('Failed to fetch challenge details');
@@ -2040,13 +2040,13 @@ const styles = StyleSheet.create({
 
 //   const handleResponse = async (resp: 'agree' | 'reject' | 'skip') => {
 //     try {
-//       await axios.post(`http://localhost:5000/api/challenges/${challengeId}/respond`, {
+//       await axios.post(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/respond`, {
 //         userId,
 //         response: resp,
 //         responseReason: resp !== 'agree' ? responseReason : undefined,
 //       });
 //       alert(`Challenge ${resp}ed successfully`);
-//       const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+//       const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
 //       setChallenge(response.data);
 //       setResponse('');
 //       setResponseReason('');
@@ -2073,7 +2073,7 @@ const styles = StyleSheet.create({
 //         setError('Invalid distance');
 //         return;
 //       }
-//       await axios.post(`http://localhost:5000/api/challenges/${challengeId}/progress`, {
+//       await axios.post(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/progress`, {
 //         userId,
 //         distance,
 //         url: progressUrl || undefined,
@@ -2081,7 +2081,7 @@ const styles = StyleSheet.create({
 //         date: new Date(),
 //       });
 //       alert('Progress updated');
-//       const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+//       const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
 //       setChallenge(response.data);
 //       setProgressInput('');
 //       setProgressUrl('');
@@ -2259,7 +2259,7 @@ const styles = StyleSheet.create({
 //         }
 //         const user = JSON.parse(currentUser);
 //         setUserId(user.userId);
-//         const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+//         const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
 //         setChallenge(response.data);
 //       } catch (err) {
 //         setError('Failed to fetch challenge details');
@@ -2270,13 +2270,13 @@ const styles = StyleSheet.create({
 
 //   const handleResponse = async (resp: 'agree' | 'reject' | 'skip') => {
 //     try {
-//       await axios.post(`http://localhost:5000/api/challenges/${challengeId}/respond`, {
+//       await axios.post(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/respond`, {
 //         userId,
 //         response: resp,
 //         responseReason: resp !== 'agree' ? responseReason : undefined,
 //       });
 //       alert(`Challenge ${resp}ed successfully`);
-//       const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+//       const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
 //       setChallenge(response.data);
 //       setResponse('');
 //       setResponseReason('');
@@ -2292,12 +2292,12 @@ const styles = StyleSheet.create({
 //         setError('Invalid distance');
 //         return;
 //       }
-//       await axios.post(`http://localhost:5000/api/challenges/${challengeId}/progress`, {
+//       await axios.post(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/progress`, {
 //         userId,
 //         distance,
 //       });
 //       alert('Progress updated');
-//       const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+//       const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
 //       setChallenge(response.data);
 //       setProgressInput('');
 //     } catch (err) {
@@ -2421,7 +2421,7 @@ const styles = StyleSheet.create({
 //         }
 //         const user = JSON.parse(currentUser);
 //         setUserId(user.userId);
-//         const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+//         const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
 //         setChallenge(response.data);
 //       } catch (err) {
 //         setError('Failed to fetch challenge details');
@@ -2432,13 +2432,13 @@ const styles = StyleSheet.create({
 
 //   const handleResponse = async (resp: 'agree' | 'reject' | 'skip') => {
 //     try {
-//       await axios.post(`http://localhost:5000/api/challenges/${challengeId}/respond`, {
+//       await axios.post(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/respond`, {
 //         userId,
 //         response: resp,
 //         responseReason: resp !== 'agree' ? responseReason : undefined,
 //       });
 //       alert(`Challenge ${resp}ed successfully`);
-//       const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+//       const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
 //       setChallenge(response.data);
 //     } catch (err) {
 //       setError('Failed to respond to challenge');
@@ -2540,7 +2540,7 @@ const styles = StyleSheet.create({
 //         }
 //         const user = JSON.parse(currentUser);
 //         setUserId(user.userId);
-//         const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+//         const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
 //         setChallenge(response.data);
 //       } catch (err) {
 //         setError('Failed to fetch challenge details');
@@ -2551,14 +2551,14 @@ const styles = StyleSheet.create({
 
 //   const handleResponse = async (resp: 'agree' | 'reject' | 'skip') => {
 //     try {
-//       await axios.post(`http://localhost:5000/api/challenges/${challengeId}/respond`, {
+//       await axios.post(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/respond`, {
 //         userId,
 //         response: resp,
 //         responseReason: resp !== 'agree' ? responseReason : undefined,
 //       });
 //       alert(`Challenge ${resp}ed successfully`);
 //       // Refresh challenge data
-//       const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+//       const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
 //       setChallenge(response.data);
 //     } catch (err) {
 //       setError('Failed to respond to challenge');
@@ -2659,7 +2659,7 @@ const styles = StyleSheet.create({
 //         }
 //         const user = JSON.parse(currentUser);
 //         setUserId(user.userId);
-//         const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+//         const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
 //         setChallenge(response.data);
 //       } catch (err) {
 //         setError('Failed to fetch challenge details');
@@ -2670,14 +2670,14 @@ const styles = StyleSheet.create({
 
 //   const handleResponse = async (resp: 'agree' | 'reject' | 'skip') => {
 //     try {
-//       await axios.post(`http://localhost:5000/api/challenges/${challengeId}/respond`, {
+//       await axios.post(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/respond`, {
 //         userId,
 //         response: resp,
 //         responseReason: resp !== 'agree' ? responseReason : undefined,
 //       });
 //       alert(`Challenge ${resp}ed successfully`);
 //       // Refresh challenge data
-//       const response = await axios.get(`http://localhost:5000/api/challenges/${challengeId}`);
+//       const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`);
 //       setChallenge(response.data);
 //     } catch (err) {
 //       setError('Failed to respond to challenge');

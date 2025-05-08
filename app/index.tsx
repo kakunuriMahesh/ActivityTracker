@@ -22,7 +22,7 @@ export default function HomeScreen() {
         }
         const userData = JSON.parse(currentUser);
         setUser(userData);
-        const response = await axios.get(`http://localhost:5000/api/notifications/${userData.userId}`);
+        const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/notifications/${userData.userId}`);
         const unread = response.data.filter((n: any) => !n.read).length;
         setUnreadCount(unread);
       } catch (err) {
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
 //         }
 //         const userData = JSON.parse(currentUser);
 //         setUser(userData);
-//         const response = await axios.get(`http://localhost:5000/api/users/${userData.userId}/notifications`);
+//         const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${userData.userId}/notifications`);
 //         const unread = response.data.filter((n: any) => !n.read).length;
 //         setUnreadCount(unread);
 //       } catch (err) {

@@ -58,7 +58,7 @@ export default function TaskScreen() {
       };
 
       // Save to backend
-      const response = await axios.post('http://localhost:5000/api/tasks', task);
+      const response = await axios.post('https://activity-tracker-backend-paum.onrender.com/api/tasks', task);
       await AsyncStorage.setItem('currentTask', JSON.stringify(response.data));
       alert('Task created!');
       router.push('/');

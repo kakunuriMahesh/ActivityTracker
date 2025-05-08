@@ -15,7 +15,7 @@ export default function SearchScreen() {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/users/search`, {
+      const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/search`, {
         params: { query: searchQuery },
       });
       setUsers(response.data);
@@ -41,7 +41,7 @@ export default function SearchScreen() {
       }
       const user = JSON.parse(currentUser);
       // Update challenge with assigneeIds and create notifications
-      await axios.patch(`http://localhost:5000/api/challenges/${challengeId}`, {
+      await axios.patch(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}`, {
         assigneeIds: selectedUsers.map((u) => u.userId),
         creatorId: user.userId,
       });

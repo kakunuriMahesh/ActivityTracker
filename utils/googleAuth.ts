@@ -22,7 +22,9 @@ const useGoogleAuth = (): GoogleAuthResult => {
     expoClientId: '782952927346-96hqv6n946tcpkd1v6m0ftgs7knk3gbs.apps.googleusercontent.com',
     androidClientId: '782952927346-96hqv6n946tcpkd1v6m0ftgs7knk3gbs.apps.googleusercontent.com', // Temporary
     clientId: Platform.OS === 'web' ? '782952927346-96hqv6n946tcpkd1v6m0ftgs7knk3gbs.apps.googleusercontent.com' : undefined,
-    redirectUri: Platform.OS === 'web' ? 'http://localhost:8081' : undefined,
+    redirectUri: Platform.OS === 'web' ? 'http://localhost:8081' : undefined, // testing
+    // redirectUri: Platform.OS === 'web' ? 'http://localhost:3000' : undefined, // check build
+    // redirectUri: Platform.OS === 'web' ? 'https://dazzling-kelpie-6f8915.netlify.app' : undefined, // check build
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -53,14 +55,14 @@ const useGoogleAuth = (): GoogleAuthResult => {
 
           // Try login first
           try {
-            const loginResponse = await axios.post('http://localhost:5000/api/users/login', {
+            const loginResponse = await axios.post('https://activity-tracker-backend-paum.onrender.com/api/users/login', {
               email: userInfo.email,
             });
             await AsyncStorage.setItem('currentUser', JSON.stringify(loginResponse.data));
             router.push('/');
           } catch (loginErr) {
             // If user doesn't exist, sign up
-            const signupResponse = await axios.post('http://localhost:5000/api/users/signup', {
+            const signupResponse = await axios.post('https://activity-tracker-backend-paum.onrender.com/api/users/signup', {
               email: userInfo.email,
               name: userInfo.name || 'Google User',
               authProvider: 'google',
@@ -144,14 +146,14 @@ export default useGoogleAuth;
 
 //           // Try login first
 //           try {
-//             const loginResponse = await axios.post('http://localhost:5000/api/users/login', {
+//             const loginResponse = await axios.post('https://activity-tracker-backend-paum.onrender.com/api/users/login', {
 //               email: userInfo.email,
 //             });
 //             await AsyncStorage.setItem('currentUser', JSON.stringify(loginResponse.data));
 //             router.push('/');
 //           } catch (loginErr) {
 //             // If user doesn't exist, sign up
-//             const signupResponse = await axios.post('http://localhost:5000/api/users/signup', {
+//             const signupResponse = await axios.post('https://activity-tracker-backend-paum.onrender.com/api/users/signup', {
 //               email: userInfo.email,
 //               name: userInfo.name || 'Google User',
 //               authProvider: 'google',
@@ -240,7 +242,7 @@ export default useGoogleAuth;
 //           }
 
 //           // Save to backend
-//           const backendResponse = await axios.post('http://localhost:5000/api/users', {
+//           const backendResponse = await axios.post('https://activity-tracker-backend-paum.onrender.com/api/users', {
 //             email: userInfo.email,
 //             name: userInfo.name || 'Google User',
 //             authProvider: 'google',

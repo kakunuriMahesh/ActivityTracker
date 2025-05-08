@@ -29,7 +29,7 @@ export default function ProfileScreen() {
         setProfile(user);
 
         // Fetch leaderboard
-        const leaderboardResponse = await axios.get('http://localhost:5000/api/users/leaderboard');
+        const leaderboardResponse = await axios.get('https://activity-tracker-backend-paum.onrender.com/api/users/leaderboard');
         setLeaderboard(leaderboardResponse.data);
       } catch (err) {
         setError('Failed to load profile or leaderboard');
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
 //         }
 //         const user = JSON.parse(currentUser);
 //         console.log(user,"response/data");
-//         // const response = await axios.get(`http://localhost:5000/api/users/${user.userId}/profile`);
+//         // const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${user.userId}/profile`);
 //         // console.log(response,"response/data");
 //         setProfile(user);
 //       } catch (err) {

@@ -87,7 +87,7 @@ export default function ChallengeScreen() {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/users/search?query=${searchQuery}`);
+      const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/search?query=${searchQuery}`);
       setUsers(response.data);
     } catch (err) {
       setError('Failed to search users');
@@ -129,7 +129,7 @@ export default function ChallengeScreen() {
       // Calculate duration in days
       const durationDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
 
-      const taskResponse = await axios.post('http://localhost:5000/api/tasks', {
+      const taskResponse = await axios.post('https://activity-tracker-backend-paum.onrender.com/api/tasks', {
         userId,
         activity,
         distance: parseFloat(distance),
@@ -139,7 +139,7 @@ export default function ChallengeScreen() {
       });
       setTaskId(taskResponse.data._id);
 
-      const challengeResponse = await axios.post('http://localhost:5000/api/challenges', {
+      const challengeResponse = await axios.post('https://activity-tracker-backend-paum.onrender.com/api/challenges', {
         creatorId: userId,
         assigneeIds: selectedUsers,
         taskId: taskResponse.data._id,
@@ -412,7 +412,7 @@ const styles = StyleSheet.create({
 
 //   const handleSearch = async () => {
 //     try {
-//       const response = await axios.get(`http://localhost:5000/api/users/search?query=${searchQuery}`);
+//       const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/search?query=${searchQuery}`);
 //       setUsers(response.data);
 //     } catch (err) {
 //       setError('Failed to search users');
@@ -433,7 +433,7 @@ const styles = StyleSheet.create({
 //       return;
 //     }
 //     try {
-//       const taskResponse = await axios.post('http://localhost:5000/api/tasks', {
+//       const taskResponse = await axios.post('https://activity-tracker-backend-paum.onrender.com/api/tasks', {
 //         userId,
 //         activity: 'Running',
 //         distance: 10,
@@ -443,7 +443,7 @@ const styles = StyleSheet.create({
 //         points: parseInt(reward),
 //       });
 //       setTaskId(taskResponse.data._id);
-//       const challengeResponse = await axios.post('http://localhost:5000/api/challenges', {
+//       const challengeResponse = await axios.post('https://activity-tracker-backend-paum.onrender.com/api/challenges', {
 //         creatorId: userId,
 //         assigneeIds: selectedUsers,
 //         taskId: taskResponse.data._id,
@@ -455,7 +455,7 @@ const styles = StyleSheet.create({
 //         endDate,
 //         duration,
 //       });
-//       await axios.patch(`http://localhost:5000/api/challenges/${challengeResponse.data._id}`, {
+//       await axios.patch(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeResponse.data._id}`, {
 //         assigneeIds: selectedUsers,
 //       });
 //       alert('Challenge created successfully');
@@ -679,7 +679,7 @@ const styles = StyleSheet.create({
 
 //   const handleSearch = async () => {
 //     try {
-//       const response = await axios.get(`http://localhost:5000/api/users/search?query=${searchQuery}`);
+//       const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/search?query=${searchQuery}`);
 //       setUsers(response.data);
 //     } catch (err) {
 //       setError('Failed to search users');
@@ -696,7 +696,7 @@ const styles = StyleSheet.create({
 
 //   const handleCreateChallenge = async () => {
 //     try {
-//       const taskResponse = await axios.post('http://localhost:5000/api/tasks', {
+//       const taskResponse = await axios.post('https://activity-tracker-backend-paum.onrender.com/api/tasks', {
 //         userId,
 //         activity: 'Running',
 //         distance: 10,
@@ -706,7 +706,7 @@ const styles = StyleSheet.create({
 //         points: parseInt(reward),
 //       });
 //       setTaskId(taskResponse.data._id);
-//       const challengeResponse = await axios.post('http://localhost:5000/api/challenges', {
+//       const challengeResponse = await axios.post('https://activity-tracker-backend-paum.onrender.com/api/challenges', {
 //         creatorId: userId,
 //         assigneeIds: selectedUsers,
 //         taskId: taskResponse.data._id,
@@ -718,7 +718,7 @@ const styles = StyleSheet.create({
 //         endDate,
 //         duration,
 //       });
-//       await axios.patch(`http://localhost:5000/api/challenges/${challengeResponse.data._id}`, {
+//       await axios.patch(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeResponse.data._id}`, {
 //         assigneeIds: selectedUsers,
 //       });
 //       alert('Challenge created successfully');
@@ -914,7 +914,7 @@ const styles = StyleSheet.create({
 //       };
 
 //       // Save task to backend
-//       const taskResponse = await axios.post('http://localhost:5000/api/tasks', task);
+//       const taskResponse = await axios.post('https://activity-tracker-backend-paum.onrender.com/api/tasks', task);
 
 //       const challenge = {
 //         creatorId: user.userId,
@@ -932,7 +932,7 @@ const styles = StyleSheet.create({
 //       };
 
 //       // Save challenge to backend
-//       const challengeResponse = await axios.post('http://localhost:5000/api/challenges', challenge);
+//       const challengeResponse = await axios.post('https://activity-tracker-backend-paum.onrender.com/api/challenges', challenge);
 
 //       router.push({
 //         pathname: '/search',

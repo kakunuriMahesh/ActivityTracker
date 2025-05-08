@@ -31,9 +31,9 @@ export default function TasksScreen() {
         }
         const user = JSON.parse(currentUser);
         setUserId(user.userId);
-        const tasksResponse = await axios.get(`http://localhost:5000/api/users/${user.userId}/tasks`);
+        const tasksResponse = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${user.userId}/tasks`);
         setTasks(tasksResponse.data.filter((task: any) => !task.completed && new Date(task.endDate) >= new Date()));
-        const challengesResponse = await axios.get(`http://localhost:5000/api/users/${user.userId}/challenges`);
+        const challengesResponse = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${user.userId}/challenges`);
         setChallenges(challengesResponse.data);
       } catch (error) {
         console.error('Error loading data:', error);
@@ -45,8 +45,8 @@ export default function TasksScreen() {
 
   const handleToggleComplete = async (taskId: string) => {
     try {
-      await axios.patch(`http://localhost:5000/api/tasks/${taskId}`, { completed: true });
-      const tasksResponse = await axios.get(`http://localhost:5000/api/users/${userId}/tasks`);
+      await axios.patch(`https://activity-tracker-backend-paum.onrender.com/api/tasks/${taskId}`, { completed: true });
+      const tasksResponse = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${userId}/tasks`);
       setTasks(tasksResponse.data.filter((task: any) => !task.completed && new Date(task.endDate) >= new Date()));
     } catch (error) {
       console.error('Error updating task:', error);
@@ -56,8 +56,8 @@ export default function TasksScreen() {
 
   const handleStopTask = async (taskId: string) => {
     try {
-      await axios.patch(`http://localhost:5000/api/tasks/${taskId}`, { completed: true });
-      const tasksResponse = await axios.get(`http://localhost:5000/api/users/${userId}/tasks`);
+      await axios.patch(`https://activity-tracker-backend-paum.onrender.com/api/tasks/${taskId}`, { completed: true });
+      const tasksResponse = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${userId}/tasks`);
       setTasks(tasksResponse.data.filter((task: any) => !task.completed && new Date(task.endDate) >= new Date()));
     } catch (error) {
       console.error('Error stopping task:', error);
@@ -72,9 +72,9 @@ export default function TasksScreen() {
         response,
         responseReason: response === 'reject' || response === 'skip' ? responseReason : undefined,
       };
-      await axios.post(`http://localhost:5000/api/challenges/${challengeId}/respond`, payload);
+      await axios.post(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/respond`, payload);
       alert(`Challenge ${response}ed successfully`);
-      const challengesResponse = await axios.get(`http://localhost:5000/api/users/${userId}/challenges`);
+      const challengesResponse = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${userId}/challenges`);
       setChallenges(challengesResponse.data);
       setResponseReason('');
       setRespondingChallengeId(null);
@@ -237,9 +237,9 @@ const styles = StyleSheet.create({
 //         }
 //         const user = JSON.parse(currentUser);
 //         setUserId(user.userId);
-//         const tasksResponse = await axios.get(`http://localhost:5000/api/users/${user.userId}/tasks`);
+//         const tasksResponse = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${user.userId}/tasks`);
 //         setTasks(tasksResponse.data.filter((task: any) => !task.completed && new Date(task.endDate) >= new Date()));
-//         const challengesResponse = await axios.get(`http://localhost:5000/api/users/${user.userId}/challenges`);
+//         const challengesResponse = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${user.userId}/challenges`);
 //         setChallenges(challengesResponse.data);
 //       } catch (error) {
 //         console.error('Error loading data:', error);
@@ -251,8 +251,8 @@ const styles = StyleSheet.create({
 
 //   const handleToggleComplete = async (taskId: string) => {
 //     try {
-//       await axios.patch(`http://localhost:5000/api/tasks/${taskId}`, { completed: true });
-//       const tasksResponse = await axios.get(`http://localhost:5000/api/users/${userId}/tasks`);
+//       await axios.patch(`https://activity-tracker-backend-paum.onrender.com/api/tasks/${taskId}`, { completed: true });
+//       const tasksResponse = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${userId}/tasks`);
 //       setTasks(tasksResponse.data.filter((task: any) => !task.completed && new Date(task.endDate) >= new Date()));
 //     } catch (error) {
 //       console.error('Error updating task:', error);
@@ -262,8 +262,8 @@ const styles = StyleSheet.create({
 
 //   const handleStopTask = async (taskId: string) => {
 //     try {
-//       await axios.patch(`http://localhost:5000/api/tasks/${taskId}`, { completed: true });
-//       const tasksResponse = await axios.get(`http://localhost:5000/api/users/${userId}/tasks`);
+//       await axios.patch(`https://activity-tracker-backend-paum.onrender.com/api/tasks/${taskId}`, { completed: true });
+//       const tasksResponse = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${userId}/tasks`);
 //       setTasks(tasksResponse.data.filter((task: any) => !task.completed && new Date(task.endDate) >= new Date()));
 //     } catch (error) {
 //       console.error('Error stopping task:', error);
@@ -278,9 +278,9 @@ const styles = StyleSheet.create({
 //         response,
 //         responseReason: response === 'reject' || response === 'skip' ? responseReason : undefined,
 //       };
-//       await axios.post(`http://localhost:5000/api/challenges/${challengeId}/respond`, payload);
+//       await axios.post(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/respond`, payload);
 //       alert(`Challenge ${response}ed successfully`);
-//       const challengesResponse = await axios.get(`http://localhost:5000/api/users/${userId}/challenges`);
+//       const challengesResponse = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${userId}/challenges`);
 //       setChallenges(challengesResponse.data);
 //       setResponseReason('');
 //       setRespondingChallengeId(null);
@@ -446,11 +446,11 @@ const styles = StyleSheet.create({
 //         setUserId(user.userId);
 
 //         // Fetch tasks
-//         const tasksResponse = await axios.get(`http://localhost:5000/api/users/${user.userId}/tasks`);
+//         const tasksResponse = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${user.userId}/tasks`);
 //         setTasks(tasksResponse.data.filter((task: any) => !task.completed && new Date(task.endDate) >= new Date()));
 
 //         // Fetch challenges
-//         const challengesResponse = await axios.get(`http://localhost:5000/api/users/${user.userId}/challenges`);
+//         const challengesResponse = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${user.userId}/challenges`);
 //         setChallenges(challengesResponse.data);
 //       } catch (error) {
 //         console.error('Error loading data:', error);
@@ -462,8 +462,8 @@ const styles = StyleSheet.create({
 
 //   const handleToggleComplete = async (taskId: string) => {
 //     try {
-//       await axios.patch(`http://localhost:5000/api/tasks/${taskId}`, { completed: true });
-//       const tasksResponse = await axios.get(`http://localhost:5000/api/users/${userId}/tasks`);
+//       await axios.patch(`https://activity-tracker-backend-paum.onrender.com/api/tasks/${taskId}`, { completed: true });
+//       const tasksResponse = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${userId}/tasks`);
 //       setTasks(tasksResponse.data.filter((task: any) => !task.completed && new Date(task.endDate) >= new Date()));
 //     } catch (error) {
 //       console.error('Error updating task:', error);
@@ -473,8 +473,8 @@ const styles = StyleSheet.create({
 
 //   const handleStopTask = async (taskId: string) => {
 //     try {
-//       await axios.patch(`http://localhost:5000/api/tasks/${taskId}`, { completed: true });
-//       const tasksResponse = await axios.get(`http://localhost:5000/api/users/${userId}/tasks`);
+//       await axios.patch(`https://activity-tracker-backend-paum.onrender.com/api/tasks/${taskId}`, { completed: true });
+//       const tasksResponse = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${userId}/tasks`);
 //       setTasks(tasksResponse.data.filter((task: any) => !task.completed && new Date(task.endDate) >= new Date()));
 //     } catch (error) {
 //       console.error('Error stopping task:', error);
@@ -489,10 +489,10 @@ const styles = StyleSheet.create({
 //         response,
 //         responseReason: response === 'reject' || response === 'skip' ? responseReason : undefined,
 //       };
-//       await axios.post(`http://localhost:5000/api/challenges/${challengeId}/respond`, payload);
+//       await axios.post(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/respond`, payload);
 //       alert(`Challenge ${response}ed successfully`);
 //       // Refresh challenges
-//       const challengesResponse = await axios.get(`http://localhost:5000/api/users/${userId}/challenges`);
+//       const challengesResponse = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${userId}/challenges`);
 //       setChallenges(challengesResponse.data);
 //       setResponseReason('');
 //       setRespondingChallengeId(null);
@@ -705,11 +705,11 @@ const styles = StyleSheet.create({
 //         setUserId(user.userId);
 
 //         // Fetch tasks
-//         const tasksResponse = await axios.get(`http://localhost:5000/api/users/${user.userId}/tasks`);
+//         const tasksResponse = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${user.userId}/tasks`);
 //         setTasks(tasksResponse.data.filter((task: any) => !task.completed && new Date(task.endDate) >= new Date()));
 
 //         // Fetch challenges
-//         const challengesResponse = await axios.get(`http://localhost:5000/api/users/${user.userId}/challenges`);
+//         const challengesResponse = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${user.userId}/challenges`);
 //         setChallenges(challengesResponse.data);
 //       } catch (error) {
 //         console.error('Error loading data:', error);
@@ -721,8 +721,8 @@ const styles = StyleSheet.create({
 
 //   const handleToggleComplete = async (taskId: string) => {
 //     try {
-//       await axios.patch(`http://localhost:5000/api/tasks/${taskId}`, { completed: true });
-//       const tasksResponse = await axios.get(`http://localhost:5000/api/users/${userId}/tasks`);
+//       await axios.patch(`https://activity-tracker-backend-paum.onrender.com/api/tasks/${taskId}`, { completed: true });
+//       const tasksResponse = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${userId}/tasks`);
 //       setTasks(tasksResponse.data.filter((task: any) => !task.completed && new Date(task.endDate) >= new Date()));
 //     } catch (error) {
 //       console.error('Error updating task:', error);
@@ -732,8 +732,8 @@ const styles = StyleSheet.create({
 
 //   const handleStopTask = async (taskId: string) => {
 //     try {
-//       await axios.patch(`http://localhost:5000/api/tasks/${taskId}`, { completed: true });
-//       const tasksResponse = await axios.get(`http://localhost:5000/api/users/${userId}/tasks`);
+//       await axios.patch(`https://activity-tracker-backend-paum.onrender.com/api/tasks/${taskId}`, { completed: true });
+//       const tasksResponse = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${userId}/tasks`);
 //       setTasks(tasksResponse.data.filter((task: any) => !task.completed && new Date(task.endDate) >= new Date()));
 //     } catch (error) {
 //       console.error('Error stopping task:', error);
@@ -743,13 +743,13 @@ const styles = StyleSheet.create({
 
 //   const handleChallengeResponse = async (challengeId: string, response: 'agree' | 'reject' | 'skip', responseReason?: string) => {
 //     try {
-//       await axios.post(`http://localhost:5000/api/challenges/${challengeId}/respond`, {
+//       await axios.post(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/respond`, {
 //         userId,
 //         response,
 //         responseReason,
 //       });
 //       alert(`Challenge ${response}ed successfully`);
-//       const challengesResponse = await axios.get(`http://localhost:5000/api/users/${userId}/challenges`);
+//       const challengesResponse = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${userId}/challenges`);
 //       setChallenges(challengesResponse.data);
 //     } catch (error) {
 //       console.error('Error responding to challenge:', error);

@@ -31,7 +31,7 @@ export default function NotificationsScreen() {
         }
         const user = JSON.parse(currentUser);
         setUserId(user.userId);
-        const response = await axios.get(`http://localhost:5000/api/notifications/${user.userId}`);
+        const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/notifications/${user.userId}`);
         setNotifications(response.data);
       } catch (err) {
         setError('Failed to load notifications');
@@ -42,7 +42,7 @@ export default function NotificationsScreen() {
 
   const markAsRead = async (notificationId: string) => {
     try {
-      await axios.patch(`http://localhost:5000/api/notifications/${notificationId}/read`);
+      await axios.patch(`https://activity-tracker-backend-paum.onrender.com/api/notifications/${notificationId}/read`);
       setNotifications(notifications.map((n: any) =>
         n._id === notificationId ? { ...n, read: true } : n
       ));
@@ -53,7 +53,7 @@ export default function NotificationsScreen() {
 
   const clearNotification = async (notificationId: string) => {
     try {
-      await axios.delete(`http://localhost:5000/api/notifications/${notificationId}`);
+      await axios.delete(`https://activity-tracker-backend-paum.onrender.com/api/notifications/${notificationId}`);
       setNotifications(notifications.filter((n: any) => n._id !== notificationId));
     } catch (err) {
       setError('Failed to clear notification');
@@ -62,7 +62,7 @@ export default function NotificationsScreen() {
 
   const handleResponse = async (challengeId: string, resp: 'agree' | 'reject' | 'skip') => {
     try {
-      await axios.post(`http://localhost:5000/api/challenges/${challengeId}/respond`, {
+      await axios.post(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/respond`, {
         userId,
         response: resp,
         responseReason: resp !== 'agree' ? responseReason : undefined,
@@ -82,7 +82,7 @@ export default function NotificationsScreen() {
         onPress={async () => {
           await markAsRead(item._id);
           if (item.type === 'challenge_received') {
-            const response = await axios.get(`http://localhost:5000/api/challenges/${item.challengeId}`);
+            const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${item.challengeId}`);
             setSelectedChallenge(response.data);
           }
         }}
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
 //         }
 //         const user = JSON.parse(currentUser);
 //         setUserId(user.userId);
-//         const response = await axios.get(`http://localhost:5000/api/users/${user.userId}/notifications`);
+//         const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${user.userId}/notifications`);
 //         setNotifications(response.data);
 //       } catch (err) {
 //         setError('Failed to load notifications');
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
 
 //   const markAsRead = async (notificationId: string) => {
 //     try {
-//       await axios.patch(`http://localhost:5000/api/notifications/${notificationId}/read`);
+//       await axios.patch(`https://activity-tracker-backend-paum.onrender.com/api/notifications/${notificationId}/read`);
 //       setNotifications(notifications.map((n: any) =>
 //         n._id === notificationId ? { ...n, read: true } : n
 //       ));
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
 
 //   const handleResponse = async (challengeId: string, resp: 'agree' | 'reject' | 'skip') => {
 //     try {
-//       await axios.post(`http://localhost:5000/api/challenges/${challengeId}/respond`, {
+//       await axios.post(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${challengeId}/respond`, {
 //         userId,
 //         response: resp,
 //         responseReason: resp !== 'agree' ? responseReason : undefined,
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
 //       onPress={async () => {
 //         await markAsRead(item._id);
 //         if (item.type === 'challenge_received') {
-//           const response = await axios.get(`http://localhost:5000/api/challenges/${item.challengeId}`);
+//           const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/challenges/${item.challengeId}`);
 //           setSelectedChallenge(response.data);
 //         }
 //       }}
@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
 //         setUserId(parsedUser.userId);
 //         // Fetch notifications
 //         try {
-//           const response = await axios.get(`http://localhost:5000/api/users/${parsedUser.userId}/notifications`);
+//           const response = await axios.get(`https://activity-tracker-backend-paum.onrender.com/api/users/${parsedUser.userId}/notifications`);
 //           setNotifications(response.data);
 //         } catch (err) {
 //           setError('Failed to fetch notifications');
